@@ -9,20 +9,23 @@ var changeInputHandler = function () {
   }
 
   var extractFraction = function () {
-    if (input.value < 0 || input.value >= 1) {
+    if (input.value <= -1 || input.value >= 1) {
       if (Math.sign(input.value) == -1) {
         return (input.value % inputSum * 100) * -1;
       } else {
         return input.value % inputSum * 100;
       }
     } else {
-      return input.value * 100;
+      if (Math.sign(input.value) == -1) {
+        return input.value * 100 * -1;
+      } else {
+        return input.value * 100;
+      }
     }
   }
 
   var leadZeroFraction = function () {
     var roundFraction = Math.round(extractFraction());
-    console.log(extractFraction());
     if (roundFraction < 10) {
       return "0" + roundFraction;
     } else {
@@ -33,7 +36,7 @@ var changeInputHandler = function () {
   var formatSum = function (sumToConvert) {
     var newSum = sumToConvert.toString().split();
     newSum[0] = newSum[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-    if (inputSum < 0) {
+    if (input.value < 0) {
       sum.innerText = "– " + newSum[0] + "," + leadZeroFraction();
     } else {
       sum.innerText = newSum[0] + "," + leadZeroFraction();
