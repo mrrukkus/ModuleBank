@@ -7,21 +7,29 @@ var changeInputHandler = function () {
     positiveNum = negativeNum * -1;
     return positiveNum;
   }
+
   var extractFraction = function () {
-    if (Math.sign(input.value) == -1) {
-      return (input.value % inputSum * 100) * -1;
+    if (input.value < 0 || input.value >= 1) {
+      if (Math.sign(input.value) == -1) {
+        return (input.value % inputSum * 100) * -1;
+      } else {
+        return input.value % inputSum * 100;
+      }
     } else {
-      return input.value % inputSum * 100;
+      return input.value * 100;
     }
   }
+
   var leadZeroFraction = function () {
     var roundFraction = Math.round(extractFraction());
+    console.log(extractFraction());
     if (roundFraction < 10) {
       return "0" + roundFraction;
     } else {
       return roundFraction;
     }
   }
+
   var formatSum = function (sumToConvert) {
     var newSum = sumToConvert.toString().split();
     newSum[0] = newSum[0].replace(/\B(?=(\d{3})+(?!\d))/g, " ");
@@ -31,6 +39,7 @@ var changeInputHandler = function () {
       sum.innerText = newSum[0] + "," + leadZeroFraction();
     }
   }
+
   if (inputSum < 0) {
     var convertedNum = convertToPlus(inputSum);
     formatSum(convertedNum);
